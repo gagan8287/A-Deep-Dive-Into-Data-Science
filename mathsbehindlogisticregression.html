@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="second.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+		<div class="body">
+			<div class="header">
+				<div class="name">
+					<a href="index.html">DATA SCIENCE</a>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-dark ">
+					  <div class="navbar-brand" ></div>
+
+					 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+						 <div class="collapse navbar-collapse " id="collapsibleNavbar">
+						    
+						    <ul class="navbar-nav nav-fill w-100">
+						      <li class="nav-item"><a class="nav-link" href="howto.html">How to Start?</a></li>
+						      <li class="nav-item"><a class="nav-link" href="mathsbehindmachinelearning.html">Maths behind ml</a></li>
+						      <li class="nav-item"><a class="nav-link" href="machinelearning.html">Machine Learning</a></li>
+						      <li class="nav-item"><a class="nav-link" href="deeplearning.html">Deep Learning</a></li>
+						    </ul>
+						 </div>
+				</nav>
+			</div>
+			
+			<div class="number">
+				<div>1</div>
+			</div>
+			<div class="whatis">
+				<div class="heading">Math Behind <strong class="keyword">Logistic Regression</strong> Algorithm</div>
+				<div class="data" style="width:80%; margin:0 auto;">
+					One often deals with real life problems of choosing between different sets of things. For example, whether a customer is going to buy a product or not, which package a customer is going to subscribe. All these come under the gambit of classification, predicting which set a particular data point belongs.
+Linear classification is the means by which classification is made based on predictor function that is linear, combining weights with the values of dependent variable. Non- linear operations may be involved in this process.
+<img src="images/23.png">
+Logistic regression Flow 
+In the above two equations, Eq 1 associates each feature with a weight. The reason why we call logistic regression one of the generalized linear model. Following which there is a use of link function(explanation will be provided below) that converts the data provided within the range of (0,1).Here Eq 2. is the link function which is a sigmoid function and z is a value that gives you the probability of one of the events happening.
+Logistic Regression process
+Given a data(X,Y), X being a matrix of values with m examples and n features and Y being a vector with m examples. The objective is to train the model to predict which class the future values belong to. Primarily, we create a weight matrix with random initialization. Then we multiply it by features.
+<img src="images/24.png">
+Eq 1. <br>
+We then pass the output obtained from Eq 1. to a link function.
+<img src="images/25.png">
+Link Function <br>
+This is followed by calculating the cost for that iteration whose formula is
+<img src="images/26.png">
+cost function <br>
+The derivative of this cost is calculated following which the weights are updated.
+<img src="images/27.png">
+Gradient <br>
+<img src="images/28.png">
+Update <br>
+The entire code in python for logistic regression from scratch is
+<img src="images/29.png"><br>
+Logistic regression from scratch <br>
+Math and Intuition behind Logistic Regression
+The goal of the logistic regression algorithm is to create a linear decision boundary separating two classes from one another. This decision boundary is given by a conditional probability.
+<img src="images/30.png">
+The line in between is the decision boundary with two classes above and below it. <br>
+Let us assume that the class above the black line(decision boundary) i.e. the ‘+’ is classified as ‘1’ and class below the decision boundary ‘o’ is defined as ‘0’. What logistic regression does is that it calculates a conditional probability i.e.
+<img src="images/31.png">
+Probability for class ‘1’ <br>
+<img src="images/32.png">
+Probability for class ‘0’ <br>
+Logistic regression calculates the probability of a particular set of data points belonging to either of those class’ given the value of x and w. The logic is that say, we have a set of values that we obtain from negative infinity to positive infinity based on the linear model, we need to narrow it down to a score that is in between zero and one as probabilities always are in that range and logistic regression talks about probabilities. The link function, sigmoid function takes care of this work.
+The use of exponent in the sigmoid function is justified as probability is always greater than zero and the property of exponents takes care of this aspect. Then we need to worry about the limiting the values less than one, which is done by dividing the value in the numerator by value greater than it.
+<img src="images/33.png">
+Probability greater than 0 <br>
+<img src="images/34.png">
+Probability greater than 0 and less than 1 <br>
+Now to get the probability of the alternate class we just have to subtract the value obtained above by 1. When we divide the above equation by the numerator term, we obtain the sigmoid link function
+<img src="images/35.png">
+Odds Ratio <br>
+We hear the term “what are the odds of a team winning”, from many people around us. Odds is basically the probability of an event occurring to that of an event not occurring. In logistic regression, the odds of an event occurring can be given by the formula
+<img src="images/36.png">
+Odds of an event occurring <br>
+The log odds or log-likelihood of the event is given by taking log of the above equation. The odds ratio is log transformed to remove the restricted range as probabilities are in the range (0,1).Log transformation changes this to values from negative infinity to positive infinity. The second reason is that log values are easier to interpret.
+<img src="images/37.png">\
+Log(odds) <br>
+If we take into consideration the conditional probability of getting an output P(y=1|x;w) is equal to the sigmoid function and the p(y=0|x;w) = 1-p(y=0|x;w) and if take in that our sample has a Bernoulli distribution then the cost function for the logistic regression model is derived by,
+<img src="images/38.png">
+Taking log this equation can be transformed into the cost function above. The presence of the minus sign in the beginning of the function is to ensure we try minimizing the negative of likelihood instead of maximizing the value as gradient descent minimizes the error.
+The Scikit-learn implementation of logistic regression is given below
+<img src="images/39.png"><br>
+Sklearn implementation <br>
+				</div>
+			</div>
+			
+			<div class = "footer">
+				<div class="foot_head">A DEEP DIVE <br> INTO DATA SCIENCE</div>
+				<a href="#" class="fa fa-facebook logo1" style="font-size: 48px;color:white; text-decoration: none;"></a>
+				<a href="#" class="fa fa-twitter logo2" style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<a href="#" class="fa fa-instagram logo3"style="font-size: 48px;color:white;text-decoration: none;" ></a>
+				<a href="#" class="fa fa-linkedin logo4"style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<div class="triangle"></div>
+			</div>
+		</div>	
+	</body>
+</html>

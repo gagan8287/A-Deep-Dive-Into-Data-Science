@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="second.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+		<div class="body">
+			<div class="header">
+				<div class="name">
+					<a href="index.html">DATA SCIENCE</a>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-dark ">
+					  <div class="navbar-brand" ></div>
+
+					 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+						 <div class="collapse navbar-collapse " id="collapsibleNavbar">
+						    
+						    <ul class="navbar-nav nav-fill w-100">
+						      <li class="nav-item"><a class="nav-link" href="howto.html">How to Start?</a></li>
+						      <li class="nav-item"><a class="nav-link" href="mathsbehindmachinelearning.html">Maths behind ml</a></li>
+						      <li class="nav-item"><a class="nav-link" href="machinelearning.html">Machine Learning</a></li>
+						      <li class="nav-item"><a class="nav-link" href="deeplearning.html">Deep Learning</a></li>
+						    </ul>
+						 </div>
+				</nav>
+			</div>
+			
+			<div class="number">
+				<div>1</div>
+			</div>
+			<div class="whatis">
+				<div class="heading"><strong class="keyword">Linear Regression </strong>from scratch</div>
+				<div class="data" style="width:80%; margin:0 auto;">
+				
+
+
+Data science is at its peak, using machine learning models you can do a lot, from predicting stock prices to generating a fake painting of the famous Mona Lisa (oh snap, that’s supposed to be a secret). Linear regression is one of the easiest to implement machine learning algorithms, We would explore this algorithm in the post.
+<h2>What is Linear Regression?</h2>
+Linear Regression is a method used to define a relationship between a dependent variable (Y) and independent variable (X). Which is simply written as :
+<img src="images/40.png">
+Where y is the dependent variable, m is the scale factor or coefficient, b being the bias coefficient and X being the independent variable. The bias coefficient gives an extra degree of freedom to this model. The goal is to draw the line of best fit between X and Y which estimates the relationship between X and Y.
+But how do we find these coefficients, We can find these using different approaches. One is the Ordinary Least Mean Square Method approach and the Gradient Descent approach. We will be implementing the Ordinary Least Mean Square Method.
+Ordinary Least Mean Square
+Earlier we discussed estimating the relationship between X and Y to a line. For example, we get sample inputs and outputs and we plot these scatter point on a 2d graph, we something similar to the graph below :
+<img src="images/41.png">
+The line seen in the graph is the actual relationship we going to accomplish, And we want to minimize the error of our model. This line is the best fit that passes through most of the scatter points and also reduces error which is the distance from the point to the line itself as illustrated below.
+<img src="images/42.png">
+And the total error of the linear model is the sum of the error of each point. I.e. ,
+<img src="images/43.png">
+ri = Distance between the line and ith point.
+n =Total number of points.
+We are squaring each of the distance’s because some points would be above the line and some below. We can minimize the error of our linear model by minimizing r thus we have
+<img src="images/44.png">
+where x¯ is the mean of the input variable X and y¯ being the mean of the output variable Y.
+<img src="images/45.png">
+Now let's implement this method in python (the fun part).
+To follow on, you need python and your awesome self. Using pip we would install the following dependencies
+numpy
+pandas
+matplotlib
+We are going to be using a dataset containing head size and brain weight of different people. This dataset is available in this repo.
+We start by importing the dataset and our dependencies
+<pre><code>
+#import libraries
+%matplotlib inline
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+dataset = pd.read_csv('dataset.csv')
+print(dataset.shape)
+dataset.head()
+
+(237, 4)
+</code></pre>
+<img src="images/46.png">
+Let's find the relationship between the Head Size and Brain weights.
+<pre><code>
+# initializing our inputs and outputs
+X = dataset['Head Size(cm^3)'].values
+Y = dataset['Brain Weight(grams)'].values
+# mean of our inputs and outputs
+x_mean = np.mean(X)
+y_mean = np.mean(Y)
+#total number of values
+n = len(X)
+# using the formula to calculate the b1 and b0
+numerator = 0
+denominator = 0
+for i in range(n):
+    numerator += (X[i] - x_mean) * (Y[i] - y_mean)
+    denominator += (X[i] - x_mean) ** 2
+    
+b1 = numerator / denominator
+b0 = y_mean - (b1 * x_mean)
+#printing the coefficient
+print(b1, b0)
+# output : 0.26342933948939945 325.57342104944223
+Now we have our bias coefficient(b) and scale factor(m). In mathematical terms :
+Brain weights =  325.57342104944223 + 0.26342933948939945 * Head size
+Now we have a linear model.
+Lets plot it graphically.
+#plotting values 
+x_max = np.max(X) + 100
+x_min = np.min(X) - 100
+#calculating line values of x and y
+x = np.linspace(x_min, x_max, 1000)
+y = b0 + b1 * x
+#plotting line 
+plt.plot(x, y, color='#00ff00', label='Linear Regression')
+#plot the data point
+plt.scatter(X, Y, color='#ff0000', label='Data Point')
+# x-axis label
+plt.xlabel('Head Size (cm^3)')
+#y-axis label
+plt.ylabel('Brain Weight (grams)')
+plt.legend()
+plt.show()
+</code></pre>
+<img src="images/47.png">
+We need to able to measure how good our model is (accuracy). There are many methods to achieve this but we would implement Root mean squared error and coefficient of Determination (R² Score).
+Root Mean Squared Error is the square root of the sum of all errors divided by the number of values, or Mathematically,
+<img src="images/48.png">
+Here yj^ is the ith predicted output values. Now we will find RMSE.
+<pre><code>
+rmse = 0
+for i in range(n):
+    y_pred=  b0 + b1* X[i]
+    rmse += (Y[i] - y_pred) ** 2
+    
+rmse = np.sqrt(rmse/n)
+print(rmse)
+
+#output : 72.1206213783709
+</code></pre>
+Let's find our R² score to be able to measure the accuracy of our linear model, mathematically :
+<img src="images/49.png">
+SST is the total sum of squares and SSR is the total sum of squares of residuals.
+R² Score usually ranges from 0 to 1. It will also become negative if the model is completely wrong. Now we will find the R² Score.
+<pre><code>
+sumofsquares = 0
+sumofresiduals = 0
+for i in range(n) :
+    y_pred = b0 + b1 * X[i]
+    sumofsquares += (Y[i] - y_mean) ** 2
+    sumofresiduals += (Y[i] - y_pred) **2
+    
+score  = 1 - (sumofresiduals/sumofsquares)
+print(score)
+
+#output : 0.6393117199570003
+</code></pre>
+0.63 is certainly not bad, but we can improve the score by :
+Getting more datasets ,
+Improving the features , 
+Fit many models etc
+				</div>
+			</div>
+			
+			<div class = "footer">
+				<div class="foot_head">A DEEP DIVE <br> INTO DATA SCIENCE</div>
+				<a href="#" class="fa fa-facebook logo1" style="font-size: 48px;color:white; text-decoration: none;"></a>
+				<a href="#" class="fa fa-twitter logo2" style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<a href="#" class="fa fa-instagram logo3"style="font-size: 48px;color:white;text-decoration: none;" ></a>
+				<a href="#" class="fa fa-linkedin logo4"style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<div class="triangle"></div>
+			</div>
+		</div>	
+	</body>
+</html>
