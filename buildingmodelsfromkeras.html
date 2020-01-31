@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="second.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+		<div class="body">
+			<div class="header">
+				<div class="name">
+					<a href="index.html">DATA SCIENCE</a>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-dark ">
+					  <div class="navbar-brand" ></div>
+
+					 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+						 <div class="collapse navbar-collapse " id="collapsibleNavbar">
+						    
+						    <ul class="navbar-nav nav-fill w-100">
+						      <li class="nav-item"><a class="nav-link" href="howto.html">How to Start?</a></li>
+						      <li class="nav-item"><a class="nav-link" href="mathsbehindmachinelearning.html">Maths behind ml</a></li>
+						      <li class="nav-item"><a class="nav-link" href="machinelearning.html">Machine Learning</a></li>
+						      <li class="nav-item"><a class="nav-link" href="deeplearning.html">Deep Learning</a></li>
+						    </ul>
+						 </div>
+				</nav>
+			</div>
+			
+			<div class="number">
+				<div>1</div>
+			</div>
+			<div class="whatis">
+				<div class="heading"><strong class="keyword">Building Models</strong> with Keras</div>
+				<div class="data" style="width:80%; margin:0 auto;">
+
+
+					
+
+
+
+<h2>Introduction to the Neural Network API</h2>
+<img src="images/65.png">
+Source
+Keras is a high-level API for building neural networks in python. The API supports sequential neural networks, recurrent neural networks, and convolutional neural networks. It also allows for easy and fast prototyping due to its modularity, user-friendliness, and extensibility. In this post, we will walk through the process of building sequential neural networks for regression and classification tasks using Keras. The documentation for Keras can be found here.
+Let’s get started!
+<h2>REGRESSION</h2>
+<h2>DATA PREPARATION</h2>
+The data we will be using for regression is the California Housing Price dataset. The data can be found here.
+First, let’s import the data and print the first five rows:
+<pre><code>
+import pandas as pd 
+df = pd.read_csv("housing.csv")
+print(df.head())
+</code></pre>
+<img src="images/66.png">
+Now, let’s define our input and target variables. We will be using longitude, latitude, housing_median_age, total_rooms, total_bedrooms, population, households, and median_income to predict median_house_value.
+<pre><code>
+import numpy as np
+X = np.array(df[['longitude', 'latitude', 'housing_median_age', 'total_rooms', 'total_bedrooms', 'population', 'households', 'median_income']])
+y = np.array(df['median_house_value'])
+We will then split our data for training and testing:
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+Now all of our necessary variables are defined. Let’s build some models!
+DEFINING THE MODEL
+The sequential model is a linear stack of layers.
+from keras.models import Sequential
+model = Sequential()
+If you get the following error:
+</code></pre>
+<img src="images/67.png">
+Try importing Keras from tensorflow in this and all subsequent imports:
+<pre><code>
+from tensorflow.keras.models import Sequential
+model = Sequential()
+</code></pre>
+<h2>ADDING LAYERS</h2>
+We can use the .add() method to add layers. We will add dense layers which we need to import separately:
+<pre><code>
+from keras.layers import Dense
+</code></pre>
+The model should know what input shape to expect in the first layer. Because of this, you need to pass information about the number of features in your model. Since we have 8 features, we need to pass in an input shape of (8,). We will add a dense layer with 8 nodes:
+<pre><code>
+model.add(Dense(8, input_shape = (8,)))
+</code></pre>
+Let’s add an additional hidden layer. For our hidden layer we will use the relu function :
+<pre><code>
+model.add(Dense(8, activation = 'relu'))
+</code></pre>
+Finally, let’s add our output layer. For regression problems, we typically define the activation function in the output layer to be linear. Additionally, the output layer has one node for regression problems:
+<pre><code>
+model.add(Dense(1, activation = 'linear'))
+</code></pre>
+<h2>COMPILING</h2>
+The next thing we have to do is configure the learning process. This is done using the compile method. In the compile method, we have to pass the following parameters:
+Loss Function: This is the function that evaluated how well your algorithm models your data set.
+Optimizer: This is a method that finds the weights that minimize your loss function.
+Metrics: For regression, we typically define the metric to be the loss function. This allows us to keep track of the loss as the model is being trained.
+We will use the root mean squared propagator for the optimizer, the mean squared error for the loss function, and mean squared error for the metrics:
+<pre><code>
+model.compile(optimizer='rmsprop', loss='mse', metrics =['mse'])
+We can look at the model summary to analyze our neural network architecture:
+print(model.summary())
+</code></pre>
+<img src="images/68.png">
+<h2>FITTING</h2>
+For model training we will use the .fit() method:
+<pre><code>
+model.fit(X_train, y_train)
+</code></pre>
+We should get the following output:
+<img src="images/69.png">
+We can pass a value for number of epochs (number of iterations over the data) to try to improve accuracy:
+<pre><code>
+model.fit(X_train, y_train, epochs = 10)
+</code></pre>
+<img src="images/70.png">
+You can play around with the number of epochs to try to minimize error:
+<pre><code>
+model.fit(X_train, y_train, epochs = 50)
+</code></pre>
+<img src="images/71.png">
+You can do the same with the number of hidden layers. Let’s try adding two additional hidden layers:
+<pre><code>
+model.add(Dense(8, input_shape = (8,)))
+model.add(Dense(8, activation = 'relu'))
+model.add(Dense(8, activation = 'relu'))
+model.add(Dense(8, activation = 'relu'))
+model.add(Dense(1, activation = 'linear'))
+model.compile(optimizer='rmsprop', loss='mse', metrics =['mse'])
+model.fit(X_train, y_train, epochs = 50)
+</code></pre>
+<img src="images/72.png">
+We see that the last five epochs have a lower mean squared error. We can also try adding more nodes. Let’s try 16 nodes instead of 8:
+<pre><code>
+model.add(Dense(16, input_shape = (8,)))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(1, activation = 'linear'))
+model.compile(optimizer='rmsprop', loss='mse', metrics =['mse'])
+model.fit(X_train, y_train, epochs = 50)
+</code></pre>
+<img src="images/73.png">
+Finally, let’s try using a different optimizer. Let’s give the ‘adam’ optimizer a shot:
+<pre><code>
+model.add(Dense(16, input_shape = (8,)))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(1, activation = 'linear'))
+model.compile(optimizer='adam', loss='mse', metrics =['mse'])
+model.fit(X_train, y_train, epochs = 50)
+</code></pre>
+<img src="images/74.png">
+The resulting model performs about the same. Finally, let’s try a large number of epochs, say 500, and passing a larger batch_size. Let’s pass a batch_size of 100:
+<pre><code>
+model.add(Dense(16, input_shape = (8,)))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(1, activation = 'linear'))
+model.compile(optimizer='adam', loss='mse', metrics =['mse'])
+model.fit(X_train, y_train, epochs = 500, batch_size=100)
+</code></pre>
+<img src="images/75.png">
+We see some improvements as a result. Though we are minimizing mean squared error, we can display a different error metric, like the mean absolute percentage error:
+<pre><code>
+model.add(Dense(16, input_shape = (8,)))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(16, activation = 'relu'))
+model.add(Dense(1, activation = 'linear'))
+model.compile(optimizer='adam', loss='mse', metrics =['mape'])
+model.fit(X_train, y_train, epochs = 500, batch_size=100)
+</code></pre>
+<img src="images/76.png">
+We see the last epoch has a mean absolute percentage error of 28%.
+<h2>PREDICTING</h2>
+In order to generate predictions we do the following:
+<pre><code>
+y_pred = model.predict(X_test)
+We can visualize our predictions using matplotlib:
+import matplotlib.pyplot as plt
+plt.clf()
+fig = plt.figure()
+fig.suptitle('Scatter plot of Actual versus Predicted')
+plt.scatter(x=y_pred, y=y_test, marker='.')
+plt.xlabel('Predicted')
+plt.ylabel('Actual ')
+plt.show()
+</code></pre>
+<img src="images/77.png">
+The more the relationship between predictions and actual values resembles a straight line the more accurate our model. There is much more we can try in terms of optimizing our model but I’ll leave that for you to play around with.
+<h2>CLASSIFICATION</h2>
+Now let’s walk through the same process for building a classification model. There are many similarities in the workflow with a few small differences!
+<h2>DATA PREPARATION</h2>
+The data we will be using for classification is the Telco Customer Churn dataset. It can be found here.
+First, let’s import the data and print the first five rows:
+<pre><code>
+import pandas as pd 
+df = pd.read_csv("Customer_Churn.csv")
+print(df.head())
+</code></pre>
+<img src="images/78.png">
+For simplicity, we will be using all of the categorical and numerical data to predict Churn. First, we need to convert the categorical columns into numerical values that the neural network can handle. For example, for gender we have:
+<pre><code>
+df.gender = pd.Categorical(df.gender)
+df['gender_code'] = df.gender.cat.codes
+</code></pre>
+Now let’s define out input and output arrays:
+<pre><code>
+import numpy as np
+features = ['gender_code', 'SeniorCitizen_code', 'PhoneService_code', 'MultipleLines_code', 
+                 'InternetService_code', 'Partner_code', 'Dependents_code', 'PaymentMethod_code', 
+                 'PaymentMethod_code', 'PaperlessBilling_code','Contract_code', 'StreamingMovies_code',
+                 'StreamingTV_code', 'TechSupport_code', 'DeviceProtection_code', 'OnlineBackup_code',
+                 'OnlineSecurity_code', 'Dependents_code', 'Partner_code','tenure', 'MonthlyCharges']
+X = np.array(df[features])
+y = np.array(df['Churn_code'])
+Let’s also standardize the input:
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X = sc.fit_transform(X)
+We will then split our data for training and testing:
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+Now all of our necessary variables are defined. Let’s build some models!
+DEFINING THE MODEL & ADDING LAYERS
+Let’s start with an 8 node input layer with input shape corresponding to the number of features:
+model = Sequential()
+model.add(Dense(8, input_shape = (len(features),)))
+Let’s add one hidden layer:
+model.add(Dense(8, activation='relu'))
+Next, let’s add our output layer. For binary classification we use 1 node for the output and the sigmoid activation function:
+model.add(Dense(1, activation='sigmoid')) 
+</code></pre>
+<h2>COMPILING</h2>
+Now let’s compile our model. We will use the ‘Adam’ propagator, binary cross-entropy for loss, and ‘accuracy’ for metrics. The Keras documentation advises that we set the metric to the value ‘accuracy’:
+<pre><code>
+
+model.compile(optimizer='adam',            loss='binary_crossentropy', metrics=['accuracy'])
+Let’s print the summary of our model:
+print(model.summary())
+</code></pre>
+<img src="images/79.png">
+<h2>FITTING</h2>
+For model training we will use the .fit() method:
+<pre><code>
+
+model.fit(X_train, y_train)
+</code></pre>
+We should get the following output:
+<img src="images/80.png">
+Similar to the regression problem, feel free to play around with the number of nodes, layers, number of epochs, batch_size and the optimizer type.
+<h2>PREDICTING</h2>
+In the prediction step we want to convert the output (which are arrays) to floats, then round the values using list comprehension:
+y_pred = [round(float(x)) for x in model.predict(X_test)]
+We can visualize the predictions using metrics classification report:
+<pre><code>
+
+from sklearn import metrics
+
+print(metrics.classification_report(y_test, y_pred))
+</code></pre>
+<img src="images/81.png">
+We can also look at the roc_auc_score and the f1_scores:
+<img src="images/82.png">
+A value equal to 1.0, in both cases, is perfect. You can significantly improve performance by tuning model parameters. I encourage you to try increasing the number of neurons (nodes), epochs, layers, and engineering additional features.
+
+				</div>
+			</div>
+			
+			<div class = "footer">
+				<div class="foot_head">A DEEP DIVE <br> INTO DATA SCIENCE</div>
+				<a href="#" class="fa fa-facebook logo1" style="font-size: 48px;color:white; text-decoration: none;"></a>
+				<a href="#" class="fa fa-twitter logo2" style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<a href="#" class="fa fa-instagram logo3"style="font-size: 48px;color:white;text-decoration: none;" ></a>
+				<a href="#" class="fa fa-linkedin logo4"style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<div class="triangle"></div>
+			</div>
+		</div>	
+	</body>
+</html>

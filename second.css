@@ -16,6 +16,7 @@ body
 }
 .body
 {
+	overflow: hidden;
 	margin: 0;
 	padding: 0;
 	position: relative;
@@ -183,6 +184,89 @@ body
 	width: 100%;
 	position: relative;
 	overflow: hidden;
+}
+.copyr
+{
+	text-align: center;
+	position: relative;
+	top:100px;
+	color: white;
+}
+@media only screen and (max-width: 600px) {
+  .footer
+  {
+  	background-image: 	url("images/bg-red-noise.png");
+  	height: 100%;
+  }
+  img
+  {
+  	max-width: 100%!important;
+  }
+  .data
+  {
+  	width:100%!important;
+  }
+  .copyr
+  {
+  	color:white!important;
+  	text-align: center;
+  	position: static;
+  }
+  .foot_head
+	{
+		font-size: 30px!important;
+		text-align: center;
+		margin-top:0!important;
+		margin-left:0!important;
+		color: white;	
+		margin-bottom: 20px;	
+	}	
+	.footer > a
+	{
+		text-align: center!important;
+		margin: 0 auto;
+	}
+	.logo1
+{
+	position:static!important;
+	margin: 0 auto!important;
+	display: block;
+	width: 100%;
+	line-height: 100px;
+	height: 100px;
+	
+}
+.logo2
+{
+	position:static!important;
+	margin: 0 auto!important;
+	display: block;
+	width: 100%;
+	line-height: 100px;
+	height: 100px;
+}
+.logo3
+{
+	position:static!important;
+	margin: 0 auto!important;
+	display: block;
+	width: 100%;
+	line-height: 100px;
+	height: 100px;
+}
+.logo4
+{
+	position:static!important;
+	margin: 0 auto!important;
+	display: block;
+	width: 100%;
+	line-height: 100px;
+	height: 100px;
+}
+  .triangle
+  {
+  	display: none!important;
+  }
 }
 .triangle
 {

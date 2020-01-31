@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="second.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+		<div class="body">
+			<div class="header">
+				<div class="name">
+					<a href="index.html">DATA SCIENCE</a>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-dark ">
+					  <div class="navbar-brand" ></div>
+
+					 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+						 <div class="collapse navbar-collapse " id="collapsibleNavbar">
+						    
+						    <ul class="navbar-nav nav-fill w-100">
+						      <li class="nav-item"><a class="nav-link" href="howto.html">How to Start?</a></li>
+						      <li class="nav-item"><a class="nav-link" href="mathsbehindmachinelearning.html">Maths behind ml</a></li>
+						      <li class="nav-item"><a class="nav-link" href="machinelearning.html">Machine Learning</a></li>
+						      <li class="nav-item"><a class="nav-link" href="deeplearning.html">Deep Learning</a></li>
+						    </ul>
+						 </div>
+				</nav>
+			</div>
+			
+			<div class="number">
+				<div>1</div>
+			</div>
+			<div class="whatis">
+				<div class="heading"><strong class="keyword">Decision Tree</strong> for Regression using Sklearn</div>
+				<div class="data" style="width:80%; margin:0 auto;">
+
+
+
+
+The process of solving regression problem with decision tree using Scikit Learn is very similar to that of classification. However for regression we use DecisionTreeRegressor class of the tree library. Also the evaluation matrics for regression differ from those of classification. The rest of the process is almost same.
+
+<h3>Dataset</h3>
+The dataset we will use for this section is the same that we used in the Linear Regression article. We will use this dataset to try and predict gas consumptions (in millions of gallons) in 48 US states based upon gas tax (in cents), per capita income (dollars), paved highways (in miles) and the proportion of population with a drivers license.
+
+The dataset is available at this link:
+<br>
+https://drive.google.com/open?id=1mVmGNx6cbfvRHC_DvF12ZL3wGLSHD9f_
+<br>
+The details of the dataset can be found from the original source.
+
+The first two columns in the above dataset do not provide any useful information, therefore they have been removed from the dataset file.
+
+Now let's apply our decision tree algorithm on this data to try and predict the gas consumption from this data.
+<pre><code>
+Importing Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+Importing the Dataset
+dataset = pd.read_csv('D:\Datasets\petrol_consumption.csv')
+</code></pre>
+<h3>Data Analysis</h3>
+We will again use the head function of the dataframe to see what our data actually looks like:
+<pre><code>
+dataset.head()
+The output looks like this:
+
+Petrol_tax	Average_income	Paved_Highways	Population_Driver_license(%)	Petrol_Consumption
+0	9.0	3571	1976	0.525	541
+1	9.0	4092	1250	0.572	524
+2	9.0	3865	1586	0.580	561
+3	7.5	4870	2351	0.529	414
+4	8.0	4399	431	0.544	410
+</code></pre>
+To see statistical details of the dataset, execute the following command:
+<pre><code>
+
+dataset.describe()
+Petrol_tax	Average_income	Paved_Highways	Population_Driver_license(%)	Petrol_Consumption
+count	48.000000	48.000000	48.000000	48.000000	48.000000
+mean	7.668333	4241.833333	5565.416667	0.570333	576.770833
+std	0.950770	573.623768	3491.507166	0.055470	111.885816
+min	5.000000	3063.000000	431.000000	0.451000	344.000000
+25%	7.000000	3739.000000	3110.250000	0.529750	509.500000
+50%	7.500000	4298.000000	4735.500000	0.564500	568.500000
+75%	8.125000	4578.750000	7156.000000	0.595250	632.750000
+max	10.00000	5342.000000	17782.000000	0.724000	986.000000
+</code></pre>
+<h3>Preparing the Data</h3>
+As with the classification task, in this section we will divide our data into attributes and labels and consequently into training and test sets.
+
+Execute the following commands to divide data into labels and attributes:
+<pre><code>
+X = dataset.drop('Petrol_Consumption', axis=1)
+y = dataset['Petrol_Consumption']
+</code></pre>
+Here the X variable contains all the columns from the dataset, except 'Petrol_Consumption' column, which is the label. The y variable contains values from the 'Petrol_Consumption' column, which means that the X variable contains the attribute set and y variable contains the corresponding labels.
+
+Execute the following code to divide our data into training and test sets:
+<pre><code>
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+</code></pre>
+<h3>Training and Making Predictions</h3>
+As mentioned earlier, for a regression task we'll use a different sklearn class than we did for the classification task. The class we'll be using here is the DecisionTreeRegressor class, as opposed to the DecisionTreeClassifier from before.
+
+To train the tree, we'll instantiate the DecisionTreeRegressor class and call the fit method:
+<pre><code>
+from sklearn.tree import DecisionTreeRegressor
+regressor = DecisionTreeRegressor()
+regressor.fit(X_train, y_train)
+To make predictions on the test set, ues the predict method:
+
+y_pred = regressor.predict(X_test)
+</code></pre>
+Now let's compare some of our predicted values with the actual values and see how accurate we were:
+<pre><code>
+df=pd.DataFrame({'Actual':y_test, 'Predicted':y_pred})
+df
+</code></pre>
+The output looks like this:
+<pre><code>
+Actual	Predicted
+41	699	631.0
+2	561	524.0
+12	525	510.0
+36	640	704.0
+38	648	524.0
+9	498	510.0
+24	460	510.0
+13	508	603.0
+35	644	631.0
+</code></pre>
+Remember that in your case the records compared may be different, depending upon the training and testing split. Since the train_test_split method randomly splits the data we likely won't have the same training and test sets.
+
+<h3>Evaluating the Algorithm</h3>
+To evaluate performance of the regression algorithm, the commonly used metrics are mean absolute error, mean squared error, and root mean squared error. The Scikit-Learn library contains functions that can help calculate these values for us. To do so, use this code from the metrics package:
+<pre><code>
+from sklearn import metrics
+print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
+print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))
+print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
+The output should look something like this:
+
+Mean Absolute Error: 54.7
+Mean Squared Error: 4228.9
+Root Mean Squared Error: 65.0299930801
+</code></pre>
+The mean absolute error for our algorithm is 54.7, which is less than 10 percent of the mean of all the values in the 'Petrol_Consumption' column. This means that our algorithm did a fine prediction job.
+
+
+				</div>
+			</div>
+			
+			<div class = "footer">
+				<div class="foot_head">A DEEP DIVE <br> INTO DATA SCIENCE</div>
+				<a href="#" class="fa fa-facebook logo1" style="font-size: 48px;color:white; text-decoration: none;"></a>
+				<a href="#" class="fa fa-twitter logo2" style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<a href="#" class="fa fa-instagram logo3"style="font-size: 48px;color:white;text-decoration: none;" ></a>
+				<a href="#" class="fa fa-linkedin logo4"style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<div class="triangle"></div>
+			</div>
+		</div>	
+	</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="second.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+		<div class="body">
+			<div class="header">
+				<div class="name">
+					<a href="index.html">DATA SCIENCE</a>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-dark ">
+					  <div class="navbar-brand" ></div>
+
+					 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+						 <div class="collapse navbar-collapse " id="collapsibleNavbar">
+						    
+						    <ul class="navbar-nav nav-fill w-100">
+						      <li class="nav-item"><a class="nav-link" href="howto.html">How to Start?</a></li>
+						      <li class="nav-item"><a class="nav-link" href="mathsbehindmachinelearning.html">Maths behind ml</a></li>
+						      <li class="nav-item"><a class="nav-link" href="machinelearning.html">Machine Learning</a></li>
+						      <li class="nav-item"><a class="nav-link" href="deeplearning.html">Deep Learning</a></li>
+						    </ul>
+						 </div>
+				</nav>
+			</div>
+			
+			<div class="number">
+				<div>1</div>
+			</div>
+			<div class="whatis">
+				<div class="heading"><strong class="keyword">Human pose estimation</strong> using Deep Learning in OpenCV</div>
+				<div class="data" style="width:80%; margin:0 auto;">
+
+
+					
+
+I recently came across a very interesting use-case of computer vision and AI.
+
+Runners Need is a UK based sports shoe brand. They offer automated gait analysis using computer vision before they sell you a customized shoe.
+
+Gait analysis is a method for identifying biomechanical abnormalities in the way in which you walk or run. A video analytics system assesses the way in which your foot strikes the floor, and determine whether your foot rolls inwards (pronates), doesn’t roll inwards enough (overpronates/supinates) or stays neutral. It shows your body’s way of distributing impact. A lot of people overpronate i.e. as the foot is planted on the floor, it rolls inward excessively, transferring weight to the inner edge instead of centering it on the ball of the foot.
+
+<img src="images/220.png">
+First, the user is asked to run on a treadmill with a neutral shoe which is watched by a video analytics system for 20 seconds. Based on this, the system determines your gait and recommends a suitable shoe. This system uses a computer vision technique called Human pose estimation.
+
+In today’s post, we will learn about deep learning based human pose estimation using open sourced OpenPose library. OpenPose is a library for real-time multi-person keypoint detection and multi-threading written in C++ with python wrapper available. OpenPose won the 2016 coco keypoint challenge . OpenCV has integrated OpenPose in its new Deep Neural Network(DNN) module. This would mean that you would need OpenCV version 3.4.1 or above to run this code. We shall also share the complete code to run human pose estimation in OpenCV.
+
+Human pose estimation:
+The problem of human pose estimation can be defined as the computer vision techniques that predict the location of various human keypoints(joints and landmarks) such as elbows, knees, neck, shoulder, hips, chest etc.
+
+Deep Learning based Human Pose estimation
+ 
+<img src="images/221.png">
+It’s a very challenging problem due to various factors such as small and hardly visible parts, occlusions and huge variability in articulations. The figure below shows the challenges:
+<img src="images/222.png">
+challenge human pose estimation
+These images have joints in various articulations. Also, some of the joints are not visible. For example, in the left image, we can predict the arms only because we understand the context and can articulate the motion and position of the person.
+
+OpenPose:
+The openPose project from Carnegie Mellon University is one of the most accurate methods for human pose estimation. This convolutional neural network based approach attacks the problem using a multi-stage classifier where each stage improves the results of the previous one.
+
+The first stage takes the input image and predicts the possible locations of each keypoint in the image with a confidence score(called the confidence map).
+<img src="images/223.png">
+The first stage takes the input image and generates a prediction for all the joints. In this image, we show the prediction after the first stage for the right elbow. The highlighted part has the high probability of it being the right elbow.
+The first stage takes the input image and generates a confidence map for all the keypoints. In this image, we show the confidence map after the first stage for the right elbow. The highlighted part has a high probability of it being the right elbow.
+
+Each subsequent stage takes not only the image data but also the confidence map of the previous stage to use the context of the nearby area from the previous stage. This improves the prediction after each step, i.e. the confidence map is more accurate after passing through all 4 stages.
+<img src="images/224.png"><img src="images/225.png">
+Deep learning based human pose estimation
+Confidence map is good for single person pose estimation. However, the authors tried to build a solution for a general multi-person human pose estimation. Multi-person human pose estimation has additional many challenges such as an unknown number of people in the image, occlusion, variation in people scale. Using confidence, you can only generate all the key points as shown in the image below:
+<img src="images/226.png">
+Pose estimation using deep learning
+In multi-person pose estimation, overlapping body parts present the problem of uniquely identifying the limbs of each person.
+
+So, the authors introduced the idea of part affinity maps. It uses the fact that certain joints are attached via limbs so another cnn branch is introduced which predicts 2D vector fields called part affinity maps(PAFs). PAFs encodes the location and orientation of the limbs.
+<img src="images/227.png">
+product affinity maps for human pose estimation
+Later we can use the direction of the part affinity maps to predict human poses accurately in multiple people pose estimation problem. Now, in the final step, we can just connect these points using greedy inference to generate the pose keypoints for all the people in the image. The connection for one type of human limbs is determined first and then this is repeated for other types of limbs.
+
+Human pose estimation using OpenPose
+One type of limbs are connected first and then this is repeated for other kinds of limbs.
+<img src="images/229.png">
+So, we use two branch convolutional neural network architecture.
+
+two branch cnn architecture for human pose estimation
+More specifically:
+
+So, In summary, there are three steps:
+
+Keypoints localization: One branch of the network is responsible for predicting all the keypoints with a confidence score. This is called confidence Map.
+Part Affinity Fields: Another branch of the network predicts a 2D vector field that predicts the keypoints association data.
+Greedy Inference: Now, we connect all the keypoints using greedy inference.
+Running Single Person Pose estimation code in OpenCV:
+In today’s post, we would only run the single person pose estimation using OpenCV. We would just be showing the confidence maps now to show the keypoints. In order to keep this post simple, we shall be showing how to connect multiple person keypoints using Pose affinity maps in a separate post next week. We would be using the pretrained model trained by the OpenPose team using Caffe on MPI dataset. This dataset has 15 keypoints to identify various points in human body.
+<pre><code>
+
+"Head": 0, "Neck": 1, "RShoulder": 2, "RElbow": 3, "RWrist": 4,
+"LShoulder": 5, "LElbow": 6, "LWrist": 7, "RHip": 8, "RKnee": 9,
+"RAnkle": 10, "LHip": 11, "LKnee": 12, "LAnkle": 13, "Chest": 14,
+"Background": 15
+</code></pre>
+We also define the pose pairs which define the limbs. This is used to create the limbs which connect the keypoints and Pose affinity maps are used to predict the limbs.
+<pre><code>
+
+POSE_PAIRS = [ ["Head", "Neck"], ["Neck", "RShoulder"], ["RShoulder", "RElbow"],
+             ["RElbow", "RWrist"], ["Neck", "LShoulder"], ["LShoulder", "LElbow"],
+             ["LElbow", "LWrist"], ["Neck", "Chest"], ["Chest", "RHip"], ["RHip", "RKnee"],
+             ["RKnee", "RAnkle"], ["Chest", "LHip"], ["LHip", "LKnee"], ["LKnee", "LAnkle"] ]
+</code></pre>
+Here is how we can download the models:
+<pre><code>
+
+OPENPOSE_URL="http://posefs1.perception.cs.cmu.edu/OpenPose/models/"
+POSE_FOLDER="pose/"
+
+MPI_FOLDER=${POSE_FOLDER}"mpi/"
+MPI_MODEL=${MPI_FOLDER}"pose_iter_160000.caffemodel"
+wget -c ${OPENPOSE_URL}${MPI_MODEL} -P ${MPI_FOLDER}
+
+First, let’s read the network graph(.prototxt file) and load the pretrained weights on the network.
+
+
+net = cv.dnn.readNetFromCaffe(args.proto, args.model)
+</code></pre>
+
+Now the next step is to load images in a batch and run them through the network. For this, we use the cv2.dnn.blobFromImage method. This method creates 4-dimensional blob from input images. Let’s look at the signature of this method:
+<pre><code>
+blob = cv.dnn.blobFromImage(image, scalefactor, size, mean, swapRB, crop)
+</code></pre>
+Where:
+
+        image: is the input image that we want to send to the neural network for inference.
+
+        scalefactor: If we want to scale our images by multiplying them by a constant number. A lot of times we divide all of our uint8 images by 255, this way all the pixels are between 0 and 1(0/255-255/255). The default value is 1.0 which is no scaling.
+
+         size: The spatial size of the output image. It will be equal to the input size required for the follow-on neural networks as the output of blobFromImage.
+
+         swapRB: Boolean to indicate if we want to swap the first and last channel in 3 channel image. OpenCV assumes that images are in BGR format by default but if we want to swap this order to RGB, we can set this flag to True which is also the default.
+
+         mean: In order to handle intensity variations and normalization, sometimes we calculate the average pixel value on the training dataset and subtract it from each image during training. If we are doing mean subtraction during training, then we must apply it during inference. This mean will be a tuple corresponding to R, G, B channels. For example mean values on the Imagenet dataset is R=103.93, G=116.77, and B=123.68. If we use swapRB=False, then this order will be (B, G, R).
+
+         crop: Boolean flag to indicate if we want to center crop our images. If it’s set to True, the input image is cropped from the center in such a way that smaller dimension is equal to the corresponding dimension in size and other dimension is equal or larger. However, if we set it to False, it would preserve the aspect ratio and just resize to dimensions in size.
+
+In this case:
+<pre><code>
+
+inp = cv.dnn.blobFromImage(frame, 1.0 / 255, (inWidth, inHeight),
+                              (0, 0, 0), swapRB=False, crop=False)
+net.setInput(inp)
+</code></pre>
+Now, we just need to call the forward function that would run the inference on the input image.
+
+<pre><code>
+out = net.forward()
+</code></pre>
+This would generate the confidence map for each keypoint(body part) which can be joined using the pose affinity maps. However, to keep things simple, we would not use the pose affinity maps and just take the global maxima of these confidence maps for each keypoint. This would affect our results a little but would work well for most cases for single person keypoint detection.
+<pre><code>
+
+for i in range(len(BODY_PARTS)):
+    # Slice heatmap of corresponging body's part.
+    heatMap = out[0, i, :, :]
+
+    # Originally, we try to find all the local maximums. To simplify a sample
+    # we just find a global one. However only a single pose at the same time
+    # could be detected this way.
+    _, conf, _, point = cv.minMaxLoc(heatMap)
+    x = (frameWidth * point[0]) / out.shape[3]
+    y = (frameHeight * point[1]) / out.shape[2]
+
+    # Add a point if it's confidence is higher than threshold.
+    points.append((int(x), int(y)) if conf > args.thr else None)
+
+Now, we can just display these key points on the original image.
+
+
+for pair in POSE_PAIRS:
+    partFrom = pair[0]
+    partTo = pair[1]
+    assert(partFrom in BODY_PARTS)
+    assert(partTo in BODY_PARTS)
+
+    idFrom = BODY_PARTS[partFrom]
+    idTo = BODY_PARTS[partTo]
+    if points[idFrom] and points[idTo]:
+        cv.line(frame, points[idFrom], points[idTo], (255, 74, 0), 3)
+        cv.ellipse(frame, points[idFrom], (4, 4), 0, 0, 360, (255, 255, 255), cv.FILLED)
+        cv.ellipse(frame, points[idTo], (4, 4), 0, 0, 360, (255, 255, 255), cv.FILLED)
+        cv.putText(frame, str(idFrom), points[idFrom], cv.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255),2,cv.LINE_AA)
+        cv.putText(frame, str(idTo), points[idTo], cv.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255),2,cv.LINE_AA)
+</code></pre>
+We save this file as run_pose.py inside our Pose_Estimation folder. Now, we can run this code using this command which passes it the prototxt, network weights and input image.
+
+<pre><code>
+python3 run_pose.py --input sample.jpg --proto pose/mpi/pose_deploy_linevec_faster_4_stages.prototxt  --model pose/mpi/pose_iter_160000.caffemodel --dataset MPI</code></pre>
+
+This shows the keypoints on the image. Here are a few examples:
+<img src="images/230.png">
+results of pose estimation run on an image
+ <img src="images/231.png">
+
+result of pose estimation run on an image
+As you can see, this takes approximately 3 seconds on an average MacBook. 
+
+
+
+
+				</div>
+			</div>
+			
+			<div class = "footer">
+				<div class="foot_head">A DEEP DIVE <br> INTO DATA SCIENCE</div>
+				<a href="#" class="fa fa-facebook logo1" style="font-size: 48px;color:white; text-decoration: none;"></a>
+				<a href="#" class="fa fa-twitter logo2" style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<a href="#" class="fa fa-instagram logo3"style="font-size: 48px;color:white;text-decoration: none;" ></a>
+				<a href="#" class="fa fa-linkedin logo4"style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<div class="triangle"></div>
+			</div>
+		</div>	
+	</body>
+</html>

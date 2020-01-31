@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="second.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+		<div class="body">
+			<div class="header">
+				<div class="name">
+					<a href="index.html">DATA SCIENCE</a>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-dark ">
+					  <div class="navbar-brand" ></div>
+
+					 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+						 <div class="collapse navbar-collapse " id="collapsibleNavbar">
+						    
+						    <ul class="navbar-nav nav-fill w-100">
+						      <li class="nav-item"><a class="nav-link" href="howto.html">How to Start?</a></li>
+						      <li class="nav-item"><a class="nav-link" href="mathsbehindmachinelearning.html">Maths behind ml</a></li>
+						      <li class="nav-item"><a class="nav-link" href="machinelearning.html">Machine Learning</a></li>
+						      <li class="nav-item"><a class="nav-link" href="deeplearning.html">Deep Learning</a></li>
+						    </ul>
+						 </div>
+				</nav>
+			</div>
+			
+			<div class="number">
+				<div>1</div>
+			</div>
+			<div class="whatis">
+				<div class="heading">Understanding the Technology Behind <strong class="keyword">DeepFakes</strong></div>
+				<div class="data" style="width:80%; margin:0 auto;">
+
+
+
+Neural networks can be used to compress and decompress images.
+
+<img src="images/200.png">
+
+The diagram above shows an image (in this specific case, a face) being fed to an encoder. Its result is a lower dimensional representation of that very same face, which is sometimes referred to as base vector or latent face. Depending on the network architecture, the latent face might not look like a face at all. When passed through a decoder, the latent face is then reconstructed. Autoencoders are lossy, hence the reconstructed face is unlikely to have the same level of detail that was originally present.
+
+The programmer has full control over the shape of the network: how many layers, how many nodes per layer and how they are connected. The real knowledge of the network is stored in the edges which connect nodes. Each edge has a weight, and finding the right set of weights that make the autoencoder works like described is a time-consuming process.
+
+Training a neural network means optimising its weights to achieve a specific goal. In the case of a traditional autoencoder, the performance of a network is measured on how well it reconstructs the original image from its representation in latent space.
+
+<h2>Training Deepfakes</h2>
+It is important to notice that if we train two autoencoders separately, they will be incompatible with each other. The latent faces are based on specific features that each network has deemed meaningful during its training process. But if two autoencoders are trained separately on different faces, their latent spaces will represent different features.
+
+What makes face swapping technology possible is finding a way to force both latent faces to be encoded on the same features. Deepfakes solved this by having both networks sharing the same encoder, yet using two different decoders.
+<img src="images/201.png">
+
+
+During the training phase, these two networks are treated separately. The Decoder A is only trained with faces of A; the Decoder B is only trained with faces of B. However, all latent faces are produced by the same Encoder. This means that the encoder itself has to identify common features in both faces. Because all faces share a similar structure, it is not unreasonable to expect the encoder to learn the concept of “face” itself.
+
+<h2>Generating Deepfakes</h2>
+When the training process is complete, we can pass a latent face generated from Subject A to the Decoder B. As seen in the diagram below, the Decoder B will try to reconstruct Subject B, from the information relative to Subject A.
+
+<img src="images/202.png">
+
+If the network has generalised well enough what makes a face, the latent space will represent facial expressions and orientations. This means generating a face for Subject B with the same expression and orientation of Subject A.
+<img src="images/203.gif">
+To better understand what this means, you can have a look at the animation below. On the left, faces of UI Artist Anisa Sanusi are extracted from a video (link) and aligned. On the right, a trained neural network is reconstructing the face of game designer Henry Hoffman to match Anisa’s expression.
+
+<img src="images/204.png">
+
+It should be obvious, at this point, that the technology behind deep fakes is not constrained on faces. It can be used, for instance, to turn apples into kiwis.
+
+
+
+What is important is that the two subjects used in the training share as many similarities as possible. This is to ensure that the shared encoder can generalise meaningful features that are easy to transfer. While this technique will work on both faces and fruits, is unlikely to convert faces into fruits.
+
+
+
+				</div>
+			</div>
+			
+			<div class = "footer">
+				<div class="foot_head">A DEEP DIVE <br> INTO DATA SCIENCE</div>
+				<a href="#" class="fa fa-facebook logo1" style="font-size: 48px;color:white; text-decoration: none;"></a>
+				<a href="#" class="fa fa-twitter logo2" style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<a href="#" class="fa fa-instagram logo3"style="font-size: 48px;color:white;text-decoration: none;" ></a>
+				<a href="#" class="fa fa-linkedin logo4"style="font-size: 48px;color:white;text-decoration: none;"></a>
+				<div class="triangle"></div>
+			</div>
+		</div>	
+	</body>
+</html>
