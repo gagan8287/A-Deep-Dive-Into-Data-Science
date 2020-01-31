@@ -204,6 +204,7 @@ body
   }
   .data
   {
+  	text-align: justify!important;
   	width:100%!important;
   }
   .copyr

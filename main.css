@@ -159,7 +159,8 @@ body
 	top:100px;
 	color: white;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
+	
   .footer
   {
   	background-image: 	url("images/bg-red-noise.png");
@@ -170,8 +171,9 @@ body
   	max-width: 100%!important;
   }
   .data
-  {
-  	width: 100%!important;
+  {	
+  	text-align: justify!important;
+  		padding:30px 5%!important;
   }
   .copyr
   {
@@ -182,11 +184,12 @@ body
   .foot_head
 	{
 		font-size: 30px!important;
-		text-align: center;
+		text-align: center!important;
 		margin-top:0!important;
 		margin-left:0!important;
 		color: white;	
-		margin-bottom: 20px;	
+		margin-bottom: 20px;
+		width:100%!important;
 	}	
 	.footer > a
 	{
